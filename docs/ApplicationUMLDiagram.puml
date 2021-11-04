@@ -1,0 +1,145 @@
+@startuml
+
+'Initiates the GUI
+class TodoListApplication {
+
+'Class only has local variables
+
+'@Override
++void start(Stage stage)
++ {static} void main(String[] args)
+}
+
+'Stores event data
+class Item {
+-String description
+-String dueDate
+-String status
+
+'Data is only added through mutator methods
++Item()
++String getDescription()
++void setDescription(String description)
++String getDueDate()
++void setDueDate(String date)
++String getStatus()
++void setStatus(String s)
+}
+
+'Formats Items to be viewed from GUI
+class ItemCell {
+-HBox hbox
+-Label description
+-Label dueDate
+-Label status
+
++ItemCell()
+'@Override
+#void updateItem(Item item, boolean empty)
++String getDescription()
++String getDueDate()
++String getStatus()
+}
+
+'Alerts user that input must be 1 <= x <= 100 characters
+class InvalidInputController {
+-Button button
+~void closePopup(ActionEvent event)
+}
+
+'Alerts user that file could not be created
+class ErrorCreatingFileController {
+-Button button
+~void closePopup(ActionEvent event)
+}
+
+'Alerts user that the file path does not exist
+class FileNotFoundController {
+-Button button
+~void closePopup(ActionEvent event)
+}
+
+'Allows user to load in previously-saved lists
+class LoadFileController {
+-Button button
+-TextField textPane
+
+~void loadLists(ActionEvent event)
+-{static} void load(String path)
+-void failToLoad()
+}
+
+'Alerts user that there cannot be > 256 of an object
+class MoreThan100ObjectsController {
+-Button button
+
+~void closePopup(ActionEvent event)
+}
+
+'Allows user to save lists to file
+class SaveFileController {
+-Button button
+-TextField textPane
+
+~void saveLists(ActionEvent event)
+-void save(String path)
+-void failToSave()
+}
+
+'Controls the main GUI
+class SceneController {
+-MenuItem MenuUserGuide
+-RadioButton completeButton;
+-MenuItem deleteAllItems;
+-MenuItem deleteItem;
+-TextField descriptionTextField;
+-DatePicker dueDateDatePicker;
+-RadioButton incompleteButton;
+-MenuItem menuFileLoadList;
+-MenuItem menuFileSaveList;
+-MenuItem menuViewAll;
+-MenuItem menuViewComplete;
+-MenuItem menuViewIncomplete;
+-Button newItemButton;
+-ScrollPane itemsScrollPane;
+-ListView<ItemCell> listViewOfItems;
+-ObservableList<ItemCell> listOfItems;
+-List<Item> inventory;
+-TextField titleTextField;
+-String title;
+-AnchorPane itemsPane;
+-ToggleGroup statusButton;
+-Boolean status;
++void initialize()
+~void addItemToList(ActionEvent event)
+~void changeTitle(ActionEvent event)
+~String getTitle()
+~void clickCompleteButton(ActionEvent event)
+~void clickIncompleteButton(ActionEvent event)
+~void deleteAllItems(ActionEvent event)
+~void deleteItem(ActionEvent event)
+~void loadList(ActionEvent event)
+~void removeDate(KeyEvent event)
+~void saveList(ActionEvent event)
+~void setDate(ActionEvent event)
+~void setDescription(ActionEvent event)
+~void viewAllItems(ActionEvent event)
+~void viewCompleteItems(ActionEvent event)
+~void viewIncompleteItems(ActionEvent event)
+~void viewUserGuide(ActionEvent event)
+}
+
+javafx.application.Application <|-- TodoListApplication
+Item <|-- ItemCell
+InvalidInputController -- SceneController
+LoadFileController -- SceneController
+LoadFileController -- Item
+MoreThan100ObjectsController -- SceneController
+SaveFileController -- SceneController
+SaveFileController -- Item
+SceneController -- ItemCell
+TodoListApplication -- SceneController
+FileNotFoundController -- LoadFileController
+ErrorCreatingFileController -- SaveFileController
+
+@enduml

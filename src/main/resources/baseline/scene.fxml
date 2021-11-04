@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.SceneController">
+   <children>
+      <MenuBar layoutY="-1.0" style="-fx-background-color: #e1e1e1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" style="-fx-background-color: #e1e1e1;" text="File">
+            <items>
+                  <MenuItem fx:id="menuFileSaveList" mnemonicParsing="false" onAction="#saveList" text="Save List" />
+                  <MenuItem fx:id="menuFileLoadList" mnemonicParsing="false" onAction="#loadList" text="Load List" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" style="-fx-background-color: #e1e1e1;" text="View">
+            <items>
+              <MenuItem fx:id="menuViewAll" mnemonicParsing="false" onAction="#viewAllItems" text="All" />
+                  <MenuItem fx:id="menuViewComplete" mnemonicParsing="false" onAction="#viewCompleteItems" text="Complete" />
+                  <MenuItem fx:id="menuViewIncomplete" mnemonicParsing="false" onAction="#viewIncompleteItems" text="Incomplete" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" style="-fx-background-color: #e1e1e1;" text="About">
+              <items>
+                  <MenuItem fx:id="MenuUserGuide" mnemonicParsing="false" onAction="#viewUserGuide" text="User Guide" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+      <VBox layoutY="30.0" prefHeight="378.0" prefWidth="600.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <HBox prefHeight="328.0" prefWidth="600.0">
+               <children>
+                  <ScrollPane fx:id="itemsScrollPane" fitToWidth="true" hbarPolicy="NEVER" prefHeight="327.0" prefWidth="600.0">
+                     <content>
+                        <AnchorPane fx:id="itemsPane">
+                           <children>
+                              <Pane prefHeight="51.0" prefWidth="400.0" style="-fx-background-color: #2196f3;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <TextField fx:id="titleTextField" layoutX="14.0" layoutY="8.0" onAction="#changeTitle" prefWidth="200.0" promptText="[Enter title here]">
+                                       <font>
+                                          <Font name="Segoe UI" size="12.0" />
+                                       </font>
+                                    </TextField>
+                                    <Button fx:id="newItemButton" layoutX="407.0" layoutY="8.0" mnemonicParsing="false" onAction="#addItemToList" text="New Item">
+                                       <font>
+                                          <Font name="Segoe UI" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <MenuButton fx:id="deleteButtonGroup" layoutX="504.0" layoutY="8.0" mnemonicParsing="false" text="Delete">
+                                      <items>
+                                        <MenuItem fx:id="deleteItem" mnemonicParsing="false" onAction="#deleteItem" text="Item" />
+                                        <MenuItem fx:id="deleteAllItems" mnemonicParsing="false" onAction="#deleteAllItems" text="All Items" />
+                                      </items>
+                                       <font>
+                                          <Font name="Segoe UI" size="12.0" />
+                                       </font>
+                                    </MenuButton>
+                                 </children>
+                              </Pane>
+                              <ListView fx:id="listViewOfItems" layoutY="47.0" prefHeight="275.0" prefWidth="400.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </HBox>
+            <Pane prefHeight="52.0" prefWidth="600.0" style="-fx-background-color: #e1e1e1;">
+               <children>
+                  <TextField fx:id="descriptionTextField" layoutX="14.0" layoutY="12.0" onAction="#setDescription" prefHeight="26.0" prefWidth="230.0" promptText="[Enter description here]" style="-fx-border-color: #2196f3;">
+                     <font>
+                        <Font name="Segoe UI" size="12.0" />
+                     </font></TextField>
+                  <DatePicker fx:id="dueDateDatePicker" layoutX="262.0" layoutY="12.0" onAction="#setDate" onKeyTyped="#removeDate" prefHeight="26.0" prefWidth="110.0" promptText="Due Date" />
+                  <RadioButton fx:id="completeButton" layoutX="392.0" layoutY="13.0" mnemonicParsing="false" onAction="#clickCompleteButton" text="Complete">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="statusButton" />
+                     </toggleGroup>
+                     <font>
+                        <Font name="Segoe UI" size="12.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="incompleteButton" layoutX="487.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickIncompleteButton" text="Incomplete" toggleGroup="$statusButton">
+                     <font>
+                        <Font name="Segoe UI" size="12.0" />
+                     </font></RadioButton>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
