@@ -14,7 +14,7 @@
       <Pane layoutY="140.0" prefHeight="10.0" prefWidth="200.0" style="-fx-background-color: #2196f3;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <Pane prefHeight="150.0" prefWidth="300.0" style="-fx-background-color: #e1e1e1;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
          <children>
-            <Button fx:id="button" layoutX="228.0" layoutY="4.0" mnemonicParsing="false" onAction="#closePopup" text="Ok">
+            <Button fx:id="button" layoutX="228.0" layoutY="4.0" mnemonicParsing="false" onAction="#closePopup" style="-fx-border-color: #2196f3;" text="Ok">
                <font>
                   <Font name="Segoe UI" size="12.0" />
                </font>

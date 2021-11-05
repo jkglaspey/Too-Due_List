@@ -27,7 +27,7 @@ public class TodoListApplication extends javafx.application.Application {
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
         // Initialize the GUI
-        stage.setTitle("To-Do List");
+        stage.setTitle("\"Too-Due\" List");
         stage.setScene(scene);
         stage.show();
     }

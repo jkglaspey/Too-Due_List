@@ -3,7 +3,7 @@
  *  Copyright 2021 Joshua Glaspey
  */
 
-// The purpose of this class is to manage the embedded GUI program which can load in To-Do Lists from a file.
+// The purpose of this class is to manage the embedded GUI program which can import a to-do list from a file.
 
 package baseline;
 
@@ -13,23 +13,38 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class LoadFileController {
 
     @FXML
-    private Button button;
+    private Button chooseFileButton;
 
     @FXML
-    private TextField textPane;
+    private Label filePathPane;
+
+    @FXML
+    private Button importButton;
+
+    // call method to open a file chooser
+    @FXML
+    void chooseFile(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        if(file != null) {
+            filePathPane.setText(file.getName());
+        }
+    }
 
     // call load method from entered file path
     @FXML
-    void loadLists(ActionEvent event) {
-        load(textPane.getText());
+    void loadFile(ActionEvent event) {
+        load(filePathPane.getText());
     }
 
     // attempt to load in saved lists to project

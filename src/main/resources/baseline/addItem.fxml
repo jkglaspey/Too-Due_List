@@ -18,7 +18,7 @@
       <Pane layoutY="140.0" prefHeight="10.0" prefWidth="200.0" style="-fx-background-color: #2196f3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <Pane prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: #e1e1e1;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button fx:id="button" layoutX="219.0" layoutY="9.0" mnemonicParsing="false" onAction="#saveItem" text="Add">
+            <Button fx:id="button" layoutX="219.0" layoutY="9.0" mnemonicParsing="false" onAction="#saveItem" style="-fx-border-color: #2196f3;" text="Add">
                <font>
                   <Font name="Segoe UI" size="12.0" />
                </font>
@@ -30,12 +30,12 @@
             <Font name="Segoe UI" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="textPane" layoutX="95.0" layoutY="48.0" prefHeight="25.0" prefWidth="196.0" promptText="[Enter description here]" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0">
+      <TextField fx:id="textPane" layoutX="95.0" layoutY="48.0" prefHeight="25.0" prefWidth="196.0" promptText="[Enter description here]" style="-fx-border-color: #2196f3;" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0">
          <font>
             <Font name="Segoe UI" size="12.0" />
          </font>
       </TextField>
-      <DatePicker fx:id="datePicker" layoutX="20.0" layoutY="100.0" prefWidth="110.0" promptText="[Due Date]" />
+      <DatePicker fx:id="datePicker" layoutX="20.0" layoutY="100.0" prefWidth="110.0" promptText="[Due Date]" style="-fx-border-color: #2196f3;" />
       <RadioButton fx:id="completeButton" layoutX="166.0" layoutY="100.0" mnemonicParsing="false" selected="true" text="Complete">
          <font>
             <Font name="Segoe UI" size="12.0" />

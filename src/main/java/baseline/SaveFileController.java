@@ -13,29 +13,51 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class SaveFileController {
 
+    // Stores the file name
     @FXML
-    private Button button;
+    private TextField fileNamePane;
+
+    // Triggers the File Chooser
+    @FXML
+    private Button findFileButton;
+
+    // Displays the file path
+    @FXML
+    private Label pathLabel;
+
+    // Saves the list
+    @FXML
+    private Button saveButton;
 
     @FXML
-    private TextField textPane;
+    void findFilePath(ActionEvent event) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File file = directoryChooser.showDialog(null);
+        if(file != null) {
+            pathLabel.setText(file.getPath());
+        }
+    }
 
     // trigger save method via text field
     @FXML
     void saveLists(ActionEvent event) {
-        save(textPane.getText());
+        save(pathLabel.getText(),fileNamePane.getText());
     }
 
     // attempt to save the currently selected lists to a file
-    private void save(String path) {
+    private void save(String path, String name) {
         // try:
-        // create new File using text from textPane
+        // create new File using text from text panes
         // create .txt file at File object
         // create new Formatter to this File
         // catch exceptions with user permissions and pre-existing file

@@ -5,10 +5,6 @@
 
 // The purpose of this class is to manage the main GUI program.
 
-// change listview to tableview!!!
-// change load file picker to FileThing
-// add GUI for adding new item
-
 package baseline;
 
 import javafx.collections.ObservableList;
@@ -18,15 +14,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 
 public class SceneController {
+
+    // Custom image for displaying the title
+    @FXML
+    private ImageView titleImage;
 
     // Button which signifies an event is complete
     @FXML
@@ -81,6 +81,10 @@ public class SceneController {
     @FXML
     private ScrollPane itemsScrollPane;
 
+    // Table for storing items
+    @FXML
+    TableView tableView;
+
     // View list for description
     @FXML
     private TableColumn<?, ?> viewDescription;
@@ -112,6 +116,12 @@ public class SceneController {
 
     // initialize the controller and values
     public void initialize() {
+
+        // assign title image to png in resources
+        titleImage.setImage(new Image(getClass().getResourceAsStream("title.png")));
+
+        // clear default message in TableView
+        tableView.setPlaceholder(new Label(""));
 
         // set each group in the table to be visible:
         // viewDescription
