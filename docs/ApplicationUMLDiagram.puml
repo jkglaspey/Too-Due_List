@@ -61,10 +61,12 @@ class FileNotFoundController {
 
 'Allows user to load in previously-saved lists
 class LoadFileController {
--Button button
--TextField textPane
+-Button chooseFileButton
+-Label filePathPane
+-Button importButton
 
-~void loadLists(ActionEvent event)
+~void chooseFile()
+~void loadFile(ActionEvent event)
 -{static} void load(String path)
 -void failToLoad()
 }
@@ -78,55 +80,67 @@ class MoreThan100ObjectsController {
 
 'Allows user to save lists to file
 class SaveFileController {
--Button button
--TextField textPane
+-TextField fileNamePane
+-Button findFileButton
+-Label pathLabel
+-Button saveButton
 
+~void findFilePath(ActionEvent event)
 ~void saveLists(ActionEvent event)
--void save(String path)
+-void save(String path, String name)
 -void failToSave()
+}
+
+class AddItemController {
+-Button button
+-RadioButton completeButton
+-DatePicker datePicker
+-RadioButton incompleteButton
+-ToggleGroup statusButton
+-TextField textPane
+~void saveItem(ActionEvent event)
 }
 
 'Controls the main GUI
 class SceneController {
--MenuItem MenuUserGuide
--RadioButton completeButton;
--MenuItem deleteAllItems;
--MenuItem deleteItem;
--TextField descriptionTextField;
--DatePicker dueDateDatePicker;
--RadioButton incompleteButton;
--MenuItem menuFileLoadList;
--MenuItem menuFileSaveList;
--MenuItem menuViewAll;
--MenuItem menuViewComplete;
--MenuItem menuViewIncomplete;
--Button newItemButton;
--ScrollPane itemsScrollPane;
--ListView<ItemCell> listViewOfItems;
--ObservableList<ItemCell> listOfItems;
--List<Item> inventory;
--TextField titleTextField;
--String title;
--AnchorPane itemsPane;
--ToggleGroup statusButton;
+-ImageView titleImage
+-RadioButton completeButton
+-MenuItem deleteAllItems
+-MenuItem deleteItem
+-TextField descriptionTextField
+-DatePicker dueDateDatePicker
+-RadioButton incompleteButton
+-MenuItem menuFileLoadList
+-MenuItem menuFileSaveList
+-MenuItem menuViewAll
+-MenuItem menuViewComplete
+-MenuItem menuViewIncomplete
+-Button newItemButton
+-ScrollPane itemsScrollPane
+~TableView tableView
+-TableColumn<Item, String> viewDescription
+-TableColumn<Item, String> viewDueDate
+-TableColumn<Item, String> viewStatus
+-ObservableList<ItemCell> listOfItems
+-List<Item> inventory
+-AnchorPane itemsPane
+-ToggleGroup statusButton
 -Boolean status;
-+void initialize()
+
++void initialize
 ~void addItemToList(ActionEvent event)
-~void changeTitle(ActionEvent event)
-~String getTitle()
-~void clickCompleteButton(ActionEvent event)
-~void clickIncompleteButton(ActionEvent event)
-~void deleteAllItems(ActionEvent event)
-~void deleteItem(ActionEvent event)
-~void loadList(ActionEvent event)
-~void removeDate(KeyEvent event)
-~void saveList(ActionEvent event)
-~void setDate(ActionEvent event)
-~void setDescription(ActionEvent event)
-~void viewAllItems(ActionEvent event)
-~void viewCompleteItems(ActionEvent event)
-~void viewIncompleteItems(ActionEvent event)
-~void viewUserGuide(ActionEvent event)
+-void clickCompleteButton(ActionEvent event)
+-void clickIncompleteButton(ActionEvent event)
+-void deleteAllItems(ActionEvent event)
+-void deleteItem(ActionEvent event)
+-void loadList(ActionEvent event)
+-void removeDate(KeyEvent event)
+-void saveList(ActionEvent event)
+-void setDate(ActionEvent event)
+-void setDescription(ActionEvent event)
+-void viewAllItems(ActionEvent event)
+-void viewCompleteItems(ActionEvent event)
+-void viewIncompleteItems(ActionEvent event)
 }
 
 javafx.application.Application <|-- TodoListApplication
@@ -141,5 +155,7 @@ SceneController -- ItemCell
 TodoListApplication -- SceneController
 FileNotFoundController -- LoadFileController
 ErrorCreatingFileController -- SaveFileController
+AddItemController -- SceneController
+InvalidInputController -- AddItemController
 
 @enduml

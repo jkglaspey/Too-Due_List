@@ -87,15 +87,15 @@ public class SceneController {
 
     // View list for description
     @FXML
-    private TableColumn<?, ?> viewDescription;
+    private TableColumn<Item, String> viewDescription;
 
     // View list for due date
     @FXML
-    private TableColumn<?, ?> viewDueDate;
+    private TableColumn<Item, String> viewDueDate;
 
     // View list for status
     @FXML
-    private TableColumn<?, ?> viewStatus;
+    private TableColumn<Item, String> viewStatus;
 
     // List of items
     private ObservableList<ItemCell> listOfItems;
