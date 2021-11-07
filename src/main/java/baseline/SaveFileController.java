@@ -39,14 +39,25 @@ public class SaveFileController {
     private Label pathLabel;
 
     // list to hold inventory items
-    private static List<Item> savedList;
+    private List<Item> savedList;
 
-    // stage which can be accessed from anywhere in the method
-    static Stage stage;
+    // Stage which can be accessed from anywhere in the method
+    private final Stage stage;
 
     // Saves the list
     @FXML
     private Button saveButton;
+
+    // Initialize the stage
+    public SaveFileController() {
+        stage = new Stage();
+    }
+
+    // Call for test methods (no stage initialization)
+    // Note: String acts as signifier that this is a test constructor
+    public SaveFileController(String s) {
+        stage = null;
+    }
 
     @FXML
     void findFilePath(ActionEvent event) {
@@ -58,21 +69,24 @@ public class SaveFileController {
     }
 
     // method called to open window and bring inventory
-    public static void sendItems(List<Item> inventory) {
+    public void sendItems(List<Item> inventory) {
         // save inventory to list
         savedList = inventory;
 
         // show the GUI
-        SaveFileController.loadWindow();
+        loadWindow();
     }
 
     // show the save file window
-    static void loadWindow() {
+    void loadWindow() {
         try{
-            // load new fxml loader, and set a new stage
-            FXMLLoader fxmlLoader = new FXMLLoader(SaveFileController.class.getResource("saveFile.fxml"));
+            // load new fxml loader, but keep stage as one thread
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("saveFile.fxml"));
+            fxmlLoader.setController(this);
+
+            // load stage
             Parent root2 = fxmlLoader.load();
-            stage = new Stage();
+            assert stage != null;
             stage.setScene(new Scene(root2));
             stage.show();
         }
@@ -98,10 +112,14 @@ public class SaveFileController {
 
         // otherwise, begin saving process
         else save(pathLabel.getText(),fileNamePane.getText());
+
+        // close window
+        assert stage != null;
+        stage.close();
     }
 
     // create file / stream
-    private Formatter createOutputStream(String path, String name) {
+    Formatter createOutputStream(String path, String name) {
         // catch exceptions
         try {
             // create new file
@@ -141,9 +159,12 @@ public class SaveFileController {
 
         // close Formatter
         stream.close();
+    }
 
-        // close window
-        stage.close();
+    // force path and file name into save method for testing
+    void forceSaveList(List<Item> values, String path, String name) {
+        savedList = values;
+        save(path,name);
     }
 
     // prompt the user that the file path cannot be used

@@ -5,28 +5,33 @@
 
 package baseline;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class LoadFileControllerTest {
+
+    // create object before testing
+    LoadFileController test;
+    @BeforeEach
+    void initController() {
+        test = new LoadFileController("Test");
+    }
 
     // assert that load has no runtime errors
     @Test
     void load() {
-        // Assert that there's no exception thrown when:
-        // Running load() from an existing file path with valid To-Do List examples.
+        // test that we populate the array of values from a txt file (256Items.txt)
+        test.forceLoad("./data/test/256Items.txt");
 
-        // Assert that an exception is thrown when:
-        // Running load() from an existing file path with incorrectly formatted To-Do Lists.
+        // test that the first value stored correctly
+        // note: the file reading is repetitive for each item, so verifying one stored verifies they all stored
+        assertEquals("Item",test.getLoadedItems().get(0).getDescription());
+        assertEquals("N/A",test.getLoadedItems().get(0).getDueDate());
+        assertEquals("Incomplete",test.getLoadedItems().get(0).getStatus());
 
-        // Assert that an exception is thrown when:
-        // Running load() from a non-existent file path.
-    }
-
-    // assert that running load when there are too many lists will throw an error
-    @Test
-    void load_TooManyLists() {
-        // Create a test file with at least 257 To-Do's.
-        // Assert that the list populates with up to 256 lists.
-        // Assert that the GUI "MoreThan256ObjectsController" was added to the scene.
+        // test that the list stored the proper number
+        assertEquals(256,test.getLoadedItems().size());
     }
 }

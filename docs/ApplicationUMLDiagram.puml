@@ -1,161 +1,191 @@
 @startuml
 
-'Initiates the GUI
-class TodoListApplication {
-
-'Class only has local variables
-
-'@Override
-+void start(Stage stage)
-+ {static} void main(String[] args)
-}
-
-'Stores event data
-class Item {
--String description
--String dueDate
--String status
-
-'Data is only added through mutator methods
-+Item(String description, String dueDate, String status)
-+String getDescription()
-+void setDescription(String description)
-+String getDueDate()
-+void setDueDate(String date)
-+String getStatus()
-+void setStatus(String s)
-}
-
-'Formats Items to be viewed from GUI
-class ItemCell {
--HBox hbox
--Label description
--Label dueDate
--Label status
-
-+ItemCell()
-'@Override
-#void updateItem(Item item, boolean empty)
-+String getDescription()
-+String getDueDate()
-+String getStatus()
-}
-
-'Alerts user that input must be 1 <= x <= 100 characters
-class InvalidInputController {
--Button button
-~void closePopup(ActionEvent event)
-}
-
-'Alerts user that file could not be created
 class ErrorCreatingFileController {
--Button button
-~void closePopup(ActionEvent event)
+    -Button button;
+
+    ~void closePopup(ActionEvent event)
 }
 
-'Alerts user that the file path does not exist
 class FileNotFoundController {
--Button button
-~void closePopup(ActionEvent event)
+    -Button button;
+
+    ~void closePopup(ActionEvent event)
 }
 
-'Allows user to load in previously-saved lists
-class LoadFileController {
--Button chooseFileButton
--Label filePathPane
--Button importButton
+class InvalidInputController {
+    -Button button;
 
-~void chooseFile()
-~void loadFile(ActionEvent event)
--{static} void load(String path)
--void failToLoad()
+    ~void closePopup(ActionEvent event)
 }
 
-'Alerts user that there cannot be > 256 of an object
 class MoreThan100ObjectsController {
--Button button
+    -Button button;
 
-~void closePopup(ActionEvent event)
+    ~void closePopup(ActionEvent event)
 }
 
-'Allows user to save lists to file
-class SaveFileController {
--TextField fileNamePane
--Button findFileButton
--Label pathLabel
--Button saveButton
+class NoPathController {
+    -Button button;
 
-~void findFilePath(ActionEvent event)
-~void saveLists(ActionEvent event)
--void save(String path, String name)
--void failToSave()
+    ~void closePopup(ActionEvent event)
 }
 
 class AddItemController {
--Button button
--RadioButton completeButton
--DatePicker datePicker
--RadioButton incompleteButton
--ToggleGroup statusButton
--TextField textPane
-~void saveItem(ActionEvent event)
+    -RadioButton completeButton
+    -DatePicker datePicker
+    -TextField textPane
+    -Button button
+    -String dueDate
+    -Item newItem
+    -Stage stage
+
+    +AddItemController()
+    +AddItemController(String s)
+    +Item display()
+    ~void setDueDate()
+    ~void setDueDate(String s)
+    ~void saveItem()
+    ~{static} boolean isValidInput(String input)
+    -void promptInvalidInput()
 }
 
-'Controls the main GUI
+class Item {
+    -String description;
+    -String dueDate;
+    -String status;
+    -int id;
+    -{static} int index = 0;
+
+    +Item(String description, String dueDate, String status)
+    +String getDescription()
+    +void setDescription(String description)
+    +String getDueDate()
+    +void setDueDate(String dueDate)
+    +String getStatus()
+    +void setStatus(String s)
+    +int getId()
+    +{static} void resetIndex()
+}
+
+class LoadFileController {
+    -Button chooseFileButton;
+    -Label filePathPane;
+    -Button importButton;
+    -Stage stage;
+    -List<Item> loadedItems;
+
+    +LoadFileController() {
+    +LoadFileController(String s)
+    ~void chooseFile(ActionEvent event)
+    +List<Item> loadItems()
+    ~void loadFile(ActionEvent event)
+    -void load(String path)
+    ~void forceLoad(String s)
+    ~List<Item> getLoadedItems()
+    -void failToLoad()
+}
+
+class SaveFileController {
+    -TextField fileNamePane;
+    -Button findFileButton;
+    -Label pathLabel;
+    -List<Item> savedList;
+    -Stage stage;
+    -Button saveButton;
+
+    +SaveFileController()
+    +SaveFileController(String s)
+    ~void findFilePath(ActionEvent event)
+    +void sendItems(List<Item> inventory)
+    ~void loadWindow()
+    ~void saveLists(ActionEvent event)
+    ~Formatter createOutputStream(String path, String name)
+    -void save(String path, String name)
+    ~void forceSaveList(List<Item> values, String path, String name)
+    -void failToSave()
+    -void invalidInput()
+    -void invalidPath()
+}
+
+class TodoListApplication extends javafx.application.Application {
+    +void start(Stage stage)
+    +{static} void main(String[] args)
+}
+
 class SceneController {
--ImageView titleImage
--RadioButton completeButton
--MenuItem deleteAllItems
--MenuItem deleteItem
--TextField descriptionTextField
--DatePicker dueDateDatePicker
--RadioButton incompleteButton
--MenuItem menuFileLoadList
--MenuItem menuFileSaveList
--MenuItem menuViewAll
--MenuItem menuViewComplete
--MenuItem menuViewIncomplete
--Button newItemButton
--ScrollPane itemsScrollPane
-~TableView tableView
--TableColumn<Item, String> viewDescription
--TableColumn<Item, String> viewDueDate
--TableColumn<Item, String> viewStatus
--ObservableList<ItemCell> listOfItems
--List<Item> inventory
--AnchorPane itemsPane
--ToggleGroup statusButton
--Boolean status;
+-ImageView titleImage;
+-RadioButton completeButton;
+-RadioButton incompleteButton;
+-{static} String COMPLETE = "Complete";
+-{static} String INCOMPLETE = "Incomplete";
+-MenuItem deleteAllItems;
+-MenuItem deleteItem;
+-TextField descriptionTextField;
+-DatePicker dueDateDatePicker;
+-MenuItem menuFileLoadList;
+-MenuItem menuFileSaveList;
+-MenuItem menuViewAll;
+-MenuItem menuViewComplete;
+-MenuItem menuViewIncomplete;
+-int view = 1;
+-Button newItemButton;
+-ScrollPane itemsScrollPane;
+~TableView<Item> tableView;
+-TableColumn<Item, String> viewDescription;
+-TableColumn<Item, String> viewDueDate;
+-TableColumn<Item, String> viewStatus;
+-ObservableList<Item> listOfItems = FXCollections.observableArrayList();
+-List<Item> inventory = new ArrayList<>();
+-AnchorPane itemsPane;
+-ToggleGroup statusButton;
 
-+void initialize
++void initialize()
+~void setTableView()
+-void refreshTable()
+~ObservableList<Item> getListOfItems()
+~List<Item> getInventory()
+~int getView()
+~void setListOfItemsToAll()
+~void setListOfItemsToComplete()
+~void setListOfItemsToIncomplete()
+~int findIndexOfID(int id)
+~void addItemToListIfStatusMatches(Item item)
 ~void addItemToList(ActionEvent event)
--void clickCompleteButton(ActionEvent event)
--void clickIncompleteButton(ActionEvent event)
--void deleteAllItems(ActionEvent event)
--void deleteItem(ActionEvent event)
--void loadList(ActionEvent event)
--void removeDate(KeyEvent event)
--void saveList(ActionEvent event)
--void setDate(ActionEvent event)
--void setDescription(ActionEvent event)
--void viewAllItems(ActionEvent event)
--void viewCompleteItems(ActionEvent event)
--void viewIncompleteItems(ActionEvent event)
+~void setDate(ActionEvent event)
+~void modifyDates(int inventoryIndex, int listOfItemsIndex, String newDueDate)
+~void setDescription(ActionEvent event)
+~void modifyDescriptions(int inventoryIndex, int listOfItemsIndex, String newDescription)
+~Boolean isInputInvalid(String s)
+~void clickCompleteButton(ActionEvent event)
+~void clickIncompleteButton(ActionEvent event)
+~void modifyStatus(int inventoryIndex, int listOfItemsIndex, String s)
+~void deleteAllItems(ActionEvent event)
+~void clearItems()
+~void deleteItem(ActionEvent event)
+~void loadList(ActionEvent event)
+~void insertLoadedList(List<Item> list)
+~void saveList(ActionEvent event)
+~void viewAllItems(ActionEvent event)
+~void viewCompleteItems(ActionEvent event)
+~void viewIncompleteItems(ActionEvent event)
+-void promptInvalidInput()
 }
 
-javafx.application.Application <|-- TodoListApplication
-Item <|-- ItemCell
-InvalidInputController -- SceneController
-LoadFileController -- SceneController
+'-----------------------------------------------------------
+AddItemController -- Item
+AddItemController -- InvalidInputController
+LoadFileController -- FileNotFoundController
 LoadFileController -- Item
-MoreThan100ObjectsController -- SceneController
-SaveFileController -- SceneController
-SaveFileController -- Item
-SceneController -- ItemCell
-TodoListApplication -- SceneController
-FileNotFoundController -- LoadFileController
-ErrorCreatingFileController -- SaveFileController
-AddItemController -- SceneController
-InvalidInputController -- AddItemController
+SaveItemController -- Item
+SaveItemController -- ErrorCreatingFileController
+SaveItemController -- InvalidInputController
+SaveItemController -- NoPathController
+javafx.application.Application <|-- TodoListApplication
+SceneController -- Item
+SceneController -- AddItemController
+SceneController -- LoadFileController
+SceneController -- SaveFileController
+SceneController -- MoreThan100ObjectsController
+SceneController -- InvalidInputController
 
 @enduml

@@ -8,6 +8,8 @@ package baseline;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class ItemTest {
 
     // create item before running each test
@@ -17,17 +19,26 @@ class ItemTest {
         test = new Item("description","10-24-2024","Complete");
     }
 
+    // test the method that gets the item id
+    // note: ids are final and cannot be modified
+    @Test
+    void getID() {
+        // add another item and assert its id is +1 of test
+        Item test2 = new Item("...","N/A","Complete");
+        assertEquals(1, test2.getId() - test.getId());
+    }
+
     // test the methods that modify the description
     // note: since we need to use a mutator method to set a value anyways, we can combine the set and get methods
     @Test
     void modifyDescription() {
-        // testing 2 String to verify it isn't hard-coded
+        // testing 2 Strings to verify it isn't hard-coded
 
-        // test.setDescription("Test");
-        // assertEquals("Test",test.getDescription());
+        test.setDescription("Test");
+        assertEquals("Test",test.getDescription());
 
-        // test.setDescription("This is not hard-coded!");
-        // assertEquals("This is not hard-coded!",test.getDescription());
+        test.setDescription("This is not hard-coded!");
+        assertEquals("This is not hard-coded!",test.getDescription());
     }
 
     // test the methods that modify the due date
@@ -36,13 +47,13 @@ class ItemTest {
     //  one
     @Test
     void modifyDueDate() {
-        // testing 2 String to verify it isn't hard-coded
+        // testing 2 Strings to verify it isn't hard-coded
 
-        // test.setDescription("10-25-1900");
-        // assertEquals("10-25-1900",test.getDueDate());
+        test.setDueDate("10-25-1900");
+        assertEquals("10-25-1900",test.getDueDate());
 
-        // test.setDescription("10-24-2021");
-        // assertEquals("10-24-2021",test.getDueDate());
+        test.setDueDate("N/A");
+        assertEquals("N/A",test.getDueDate());
     }
 
     // test the method that changes the status of the Item
@@ -50,20 +61,11 @@ class ItemTest {
     @Test
     void modifyStatus() {
         // case 1: "Complete"
-        //test.setStatus("Complete");
-        //assertEquals("Complete",test.getStatus());
+        test.setStatus("Complete");
+        assertEquals("Complete",test.getStatus());
 
         // case 2: "Incomplete"
-        // test.setStatus("Incomplete");
-        // assertEquals("Incomplete",test.getStatus());
-    }
-
-    // test the method that sets the status to either one of two strings
-    // note: the strings will only be one of two values, but it will not break the Item if it is not formatted
-    //  correctly
-    @Test
-    void getStatus() {
-        // assert the constructor sets the initial value to false
-        // assertEquals("Incomplete",test.getStatus());
+        test.setStatus("Incomplete");
+        assertEquals("Incomplete",test.getStatus());
     }
 }

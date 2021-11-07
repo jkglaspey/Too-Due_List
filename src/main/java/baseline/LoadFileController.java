@@ -47,6 +47,10 @@ public class LoadFileController {
         stage = new Stage();
     }
 
+    // used for testing (no stage declaration)
+    // note: String acts as signifier that this is a test constructor
+    public LoadFileController(String s) { stage = null; }
+
     // call method to open a file chooser
     @FXML
     void chooseFile(ActionEvent event) {
@@ -66,6 +70,7 @@ public class LoadFileController {
 
             // load stage
             Parent root1 = fxmlLoader.load();
+            assert stage != null;
             stage.setScene(new Scene(root1));
             stage.showAndWait();
         }
@@ -81,25 +86,20 @@ public class LoadFileController {
     // call load method from entered file path
     @FXML
     void loadFile(ActionEvent event) {
+        // get values into list from specified file
         load(filePathPane.getText());
-    }
 
-    // replace invalid characters in file path
-    private String fixPath(String path) {
-        // replace "\" with "\\"
-        System.out.print(path);
-        return path.replace("\\","\\\\");
+        // close the window
+        assert stage != null;
+        stage.close();
     }
 
     // attempt to load in saved lists to project
-    // note: this class utilizes static methods because it does not require an object to be created to function.
     private void load(String path) {
         // try to create a Scanner at location
         Scanner stream;
         try {
-            // use fixPath method to make path a valid name
-            String pathName = fixPath(path);
-            stream = new Scanner(new File(pathName));
+            stream = new Scanner(new File(path));
         }
         // file was not found
         catch (FileNotFoundException e) {
@@ -121,9 +121,16 @@ public class LoadFileController {
 
         // close Scanner
         stream.close();
+    }
 
-        // close the window
-        stage.close();
+    // call the load method with a preset String (for testing purposes)
+    void forceLoad(String s) {
+        load(s);
+    }
+
+    // get the current list of items
+    List<Item> getLoadedItems() {
+        return loadedItems;
     }
 
     // prompt user that the file cannot be found

@@ -5,25 +5,87 @@
 
 package baseline;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SaveFileControllerTest {
 
-    // assert that save has no runtime errors
+    // initialize a test object
+    SaveFileController test;
+    @BeforeEach
+    void initController() {
+        test = new SaveFileController("Test");
+    }
+
+    // assert that the outputStream method creates a successful new file and stream
     @Test
-    void save() {
-        // Assert that no exception is thrown when:
-        // Saving selected lists to a file at a valid file path on the local user's pc.
+    void test_createOutputStream() {
+        Formatter result = test.createOutputStream("./data/test","testOutputStream");
 
-        // Assert that an exception is thrown when:
-        // No lists are selected.
+        // assert the file was created
+        File testFile = new File("./data/test/testOutputStream.txt");
+        assertTrue(testFile.exists());
 
-        // Assert that an exception is thrown when:
-        // Saving selected lists to a file at an invalid file path in the pc.
+        // assert the stream is not null
+        assertNotNull(result);
 
-        // Assert that an exception is thrown when:
-        // Using illegal characters in a .txt file declaration, so the File object was never created successfully.
+        // close stream
+        result.close();
+
+        // delete the file for test repeatability
+        testFile.delete();
+    }
+
+    // assert that save works appropriately
+    @Test
+    void test_save() {
+        // create path and name strings
+        String path = "./data/test";
+        String name = "testSave";
+
+        // populate a list with a test item
+        List<Item> values = new ArrayList<>();
+        values.add(new Item("Item","N/A","Incomplete"));
+
+        // call the method
+        test.forceSaveList(values,path,name);
+
+        // create Scanner to read file
+        Scanner readTestFile = null;
+        File testFile = null;
+        try {
+            testFile = new File("./data/test/testSave.txt");
+            readTestFile = new Scanner(testFile);
+        }
+        catch (FileNotFoundException e) {
+            fail();
+        }
+
+        // test that the file contains the correct size
+        int numOfItems = readTestFile.nextInt();
+        assertEquals(1,numOfItems);
+
+        // skip to next line
+        readTestFile.nextLine();
+
+        // assert the item was stored correctly
+        assertEquals("Item",readTestFile.nextLine());
+        assertEquals("N/A",readTestFile.nextLine());
+        assertEquals("Incomplete",readTestFile.nextLine());
+
+        // close stream
+        readTestFile.close();
+
+        // delete the file for test repeatability
+        testFile.delete();
     }
 }

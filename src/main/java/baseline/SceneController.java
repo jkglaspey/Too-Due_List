@@ -220,13 +220,23 @@ public class SceneController {
         return listOfItems;
     }
 
+    // return the inventory of items
+    // note: this is used for testing
+    List<Item> getInventory() {
+        return inventory;
+    }
+
+    // return the current status view
+    // note: this is used for testing
+    int getView() { return view; }
+
     // set the observable list of items to the inventory
     void setListOfItemsToAll() {
         // change view status
         view = 1;
 
         // clear the list
-        listOfItems.removeAll();
+        listOfItems.clear();
 
         // add all items in the database to the list
         listOfItems.addAll(inventory);
@@ -238,7 +248,7 @@ public class SceneController {
         view = 2;
 
         // clear the list
-        listOfItems.removeAll();
+        listOfItems.clear();
 
         // add complete items in the database to the list
         for(Item i : inventory) {
@@ -252,7 +262,7 @@ public class SceneController {
         view = 3;
 
         // clear the list
-        listOfItems.removeAll();
+        listOfItems.clear();
 
         // add incomplete items in the database to the list
         for(Item i : inventory) {
@@ -261,7 +271,7 @@ public class SceneController {
     }
 
     // create method to find the index of a value in the inventory given the ID
-    private int findIndexOfID(int id) {
+    int findIndexOfID(int id) {
         // loop through inventory
         for(int i = 0; i < inventory.size(); i++) {
             if(inventory.get(i).getId() == id) return i;
@@ -274,12 +284,13 @@ public class SceneController {
     // takes an item and adds it to the listOfItems IF the status matches
     void addItemToListIfStatusMatches(Item item) {
         switch(view) {
+            case 1: listOfItems.add(item);
+                    break;
             case 2: if(item.getStatus().equals(COMPLETE)) listOfItems.add(item);
                 break;
             case 3: if(item.getStatus().equals(INCOMPLETE)) listOfItems.add(item);
                 break;
-            default: listOfItems.add(item);
-                break;
+            default: break;
         }
     }
 
@@ -346,14 +357,20 @@ public class SceneController {
             newDueDate = "N/A";
         }
 
+        // modify the date values
+        modifyDates(inventoryIndex,listOfItemsIndex,newDueDate);
+
+        // refresh the table
+        refreshTable();
+    }
+
+    // Changes the date value in both lists
+    void modifyDates(int inventoryIndex, int listOfItemsIndex, String newDueDate) {
         // change date in inventory
         if(inventoryIndex >= 0) inventory.get(inventoryIndex).setDueDate(newDueDate);
 
         // modify the item in viewable list
         listOfItems.get(listOfItemsIndex).setDueDate(newDueDate);
-
-        // refresh the table
-        refreshTable();
     }
 
     // Changes the description on the item in the list view
@@ -373,19 +390,33 @@ public class SceneController {
 
         // verify the length of the string in the text pane is between 1 and 256 characters
         String newDescription = descriptionTextField.getText();
-        if(newDescription.length() < 1 || newDescription.length() > 256) {
+        if(isInputInvalid(newDescription)) {
+            // display popup that input is invalid and break method
             promptInvalidInput();
             return;
         }
 
+        // modify the description values
+        modifyDescriptions(inventoryIndex,listOfItemsIndex,newDescription);
+
+        // refresh the table
+        refreshTable();
+    }
+
+    // change the description values in both lists
+    void modifyDescriptions(int inventoryIndex, int listOfItemsIndex, String newDescription) {
         // modify the item in inventory
         if(inventoryIndex >= 0) inventory.get(inventoryIndex).setDescription(newDescription);
 
         // modify the item in viewable list
         listOfItems.get(listOfItemsIndex).setDescription(newDescription);
+    }
 
-        // refresh the table
-        refreshTable();
+    // determine if input entered by user is valid in character length
+    Boolean isInputInvalid(String s) {
+        // test if input is outside the valid range
+        return s.length() < 1 || s.length() > 256;
+        // input is good
     }
 
     // Sets the status of an item to "Complete"
@@ -403,11 +434,8 @@ public class SceneController {
             return;
         }
 
-        // modify the item in inventory
-        if(inventoryIndex >= 0) inventory.get(inventoryIndex).setStatus(COMPLETE);
-
-        // modify the item in viewable list
-        listOfItems.get(listOfItemsIndex).setStatus(COMPLETE);
+        // modify the status values
+        modifyStatus(inventoryIndex,listOfItemsIndex,COMPLETE);
 
         // refresh the table
         refreshTable();
@@ -428,32 +456,40 @@ public class SceneController {
             return;
         }
 
-        // modify the item in inventory
-        if(inventoryIndex >= 0) inventory.get(inventoryIndex).setStatus(INCOMPLETE);
-
-        // modify the item in viewable list
-        listOfItems.get(listOfItemsIndex).setStatus(INCOMPLETE);
+        // modify the status values
+        modifyStatus(inventoryIndex,listOfItemsIndex,INCOMPLETE);
 
         // refresh the table
         refreshTable();
     }
 
+    // change the status values in both lists
+    // note: can only be changed between 2 values
+    void modifyStatus(int inventoryIndex, int listOfItemsIndex, String s) {
+        // modify the item in inventory
+        if(inventoryIndex >= 0) inventory.get(inventoryIndex).setStatus(s);
+
+        // modify the item in viewable list
+        listOfItems.get(listOfItemsIndex).setStatus(s);
+    }
+
     // Call the method that deletes all items from a list
     @FXML
     void deleteAllItems(ActionEvent event) {
+        // call method to empty lists
         clearItems();
+
+        // set table view to empty
+        tableView.getItems().clear();
     }
 
     // Delete all items from inventory and current view
     void clearItems() {
-        // remove all items from inventory
-        inventory = new ArrayList<>();
+        // empty items from inventory
+        inventory.clear();
 
         // empty list of items
-        listOfItems.removeAll();
-
-        // set table view to list view
-        tableView.getItems().clear();
+        listOfItems.clear();
 
         // reset the item index counter
         Item.resetIndex();
@@ -492,11 +528,17 @@ public class SceneController {
         // verify items were present on file
         if(loadedItems == null || loadedItems.isEmpty()) return;
 
+        // internally change values to loadedItems
+        insertLoadedList(loadedItems);
+    }
+
+    // Changes the inventory to a new list and resets the table view
+    void insertLoadedList(List<Item> list) {
         // reset list
         clearItems();
 
         // save new items to inventory
-        inventory = loadedItems;
+        inventory = list;
 
         // set current view to ALL
         setListOfItemsToAll();
@@ -505,7 +547,7 @@ public class SceneController {
     // Saves a list to a specified directory in the local drive
     @FXML
     void saveList(ActionEvent event) {
-        SaveFileController.sendItems(inventory);
+        (new SaveFileController()).sendItems(inventory);
     }
 
     // Changes the ListView to show only the complete values
@@ -548,7 +590,7 @@ public class SceneController {
     }
 
     // the user entered invalid input
-    void promptInvalidInput() {
+    private void promptInvalidInput() {
         try{
             // load new fxml loader, and set a new stage
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("invalidInput.fxml"));

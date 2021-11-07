@@ -1,3 +1,10 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 1 Solution
+ *  Copyright 2021 Joshua Glaspey
+ */
+
+// The purpose of this class is to manage the GUI for adding a new item to the inventory of items
+
 package baseline;
 
 import javafx.fxml.FXML;
@@ -40,6 +47,12 @@ public class AddItemController {
         stage = new Stage();
     }
 
+    // create constructor for testing (no stage initialization)
+    // note: String acts as signifier that this is a test constructor
+    public AddItemController(String s) {
+        stage = null;
+    }
+
     // method that opens the default window and returns an item after the process is completed
     public Item display() {
         try{
@@ -68,15 +81,23 @@ public class AddItemController {
     @FXML
     void setDueDate() {
         try {
-            // get the due date
-            dueDate = datePicker.getValue().toString();
-            if(dueDate.isEmpty()) dueDate = "N/A";
+            // get the due date and pass to setter method
+            setDueDate(datePicker.getValue().toString());
         }
         // catch null pointer
         catch (NullPointerException e) {
             dueDate = "N/A";
         }
     }
+
+    // set the due date to parameter value
+    void setDueDate(String s) {
+        dueDate = s;
+        if(dueDate.isEmpty()) dueDate = "N/A";
+    }
+
+    // get the due date
+    String getDueDate() { return dueDate; }
 
     // the user clicks the add item button
     // note: this method ensures there's no errors with the input
@@ -86,11 +107,8 @@ public class AddItemController {
         String description = textPane.getText();
 
         // verify the text is less than 256 and greater than 1 character
-        if(description.length() > 256 || description.length() < 1) {
-            // prompt user that input is invalid
+        if(!isValidInput(description)) {
             promptInvalidInput();
-
-            // break the function
             return;
         }
 
@@ -104,6 +122,10 @@ public class AddItemController {
 
         // close the stage
         ((Stage) button.getScene().getWindow()).close();
+    }
+
+    static boolean isValidInput(String input) {
+        return (input.length() <= 256 && input.length() > 0);
     }
 
     // the user entered invalid input
