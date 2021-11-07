@@ -71,7 +71,7 @@ public class SaveFileController {
         try{
             // load new fxml loader, and set a new stage
             FXMLLoader fxmlLoader = new FXMLLoader(SaveFileController.class.getResource("saveFile.fxml"));
-            Parent root2 = (Parent)fxmlLoader.load();
+            Parent root2 = fxmlLoader.load();
             stage = new Stage();
             stage.setScene(new Scene(root2));
             stage.show();
@@ -88,14 +88,12 @@ public class SaveFileController {
         if(pathLabel.getText().length() < 1) {
             // call invalid path
             invalidPath();
-            return;
         }
 
         // verify the text is valid
         else if(fileNamePane.getText().length() < 1 || fileNamePane.getText().length() > 256) {
             // call invalid input
             invalidInput();
-            return;
         }
 
         // otherwise, begin saving process
@@ -106,12 +104,9 @@ public class SaveFileController {
     private Formatter createOutputStream(String path, String name) {
         // catch exceptions
         try {
-            // fix file path name
-            String pathName = path + "\\" + name + ".txt";
-            pathName.replace("\\","\\\\");
-
             // create new file
-            File savedFile = new File(pathName);
+            // note: we can use hard-coded path-delimiters since we are locating a path on the local computer
+            File savedFile = new File(path + "\\" + name + ".txt");
             if(!savedFile.createNewFile()) {
                 // file could not be created, open fail GUI
                 failToSave();
@@ -137,11 +132,11 @@ public class SaveFileController {
         if(stream == null) return;
 
         // write size of inventory to file FIRST
-        stream.format("%d\n",savedList.size());
+        stream.format("%d%n",savedList.size());
 
         // write each item to a new line
         for(Item i : savedList) {
-            stream.format("%s\n%s\n%s\n",i.getDescription(),i.getDueDate(),i.getStatus());
+            stream.format("%s%n%s%n%s%n",i.getDescription(),i.getDueDate(),i.getStatus());
         }
 
         // close Formatter
@@ -156,10 +151,10 @@ public class SaveFileController {
         try{
             // load new fxml loader, and set a new stage
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("errorCreatingFile.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+            Parent root = fxmlLoader.load();
+            Stage stage2 = new Stage();
+            stage2.setScene(new Scene(root));
+            stage2.show();
         }
         catch(IOException e) {
             System.err.print("Error loading ErrorCreatingFile GUI.");
@@ -171,7 +166,7 @@ public class SaveFileController {
         try{
             // load new fxml loader, and set a new stage
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("invalidInput.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
+            Parent root = fxmlLoader.load();
             Stage stage2 = new Stage();
             stage2.setScene(new Scene(root));
             stage2.show();
@@ -186,7 +181,7 @@ public class SaveFileController {
         try{
             // load new fxml loader, and set a new stage
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("noPath.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
+            Parent root = fxmlLoader.load();
             Stage stage2 = new Stage();
             stage2.setScene(new Scene(root));
             stage2.show();

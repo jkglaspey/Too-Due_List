@@ -1,24 +1,14 @@
 package baseline;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class AddItemController {
-
-    // button which triggers the new item to be added to the table
-    @FXML
-    private Button button;
 
     // button for marking item as complete
     @FXML
@@ -28,52 +18,55 @@ public class AddItemController {
     @FXML
     private DatePicker datePicker;
 
-    // button for marking item as incomplete
-    @FXML
-    private RadioButton incompleteButton;
-
-    // group for the completion status radio buttons
-    @FXML
-    private ToggleGroup statusButton;
-
     // text pane to enter a description
     @FXML
     private TextField textPane;
+
+    // button which adds the new item
+    @FXML
+    private Button button;
 
     // string which holds the due date
     private String dueDate = "N/A";
 
     // item which will be returned
-    static Item newItem;
+    private Item newItem;
 
     // stage object
-    static Stage stage = new Stage();
+    private final Stage stage;
+
+    // initialize values
+    public AddItemController() {
+        stage = new Stage();
+    }
 
     // method that opens the default window and returns an item after the process is completed
-    public static Item display() {
+    public Item display() {
         try{
-            // reset item
-            newItem = null;
+            // load new fxml loader, but keep stage as one thread
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addItem.fxml"));
+            fxmlLoader.setController(this);
 
-            // load new fxml loader, and set a new stage
-            FXMLLoader fxmlLoader = new FXMLLoader(AddItemController.class.getResource("addItem.fxml"));
-            Parent root1 = (Parent)fxmlLoader.load();
+            // load stage
+            Parent root1 = fxmlLoader.load();
             stage.setScene(new Scene(root1));
 
             // show window, but wait for add button to be clicked
             stage.showAndWait();
+
+            // return created item
             return newItem;
         }
         catch(IOException e) {
             System.err.print("Error loading addItem GUI.");
         }
-        // GUI fails to appear
+        // item creation fails
         return null;
     }
 
     // change the due date to last selected OR null
     @FXML
-    void setDueDate(ActionEvent event) {
+    void setDueDate() {
         try {
             // get the due date
             dueDate = datePicker.getValue().toString();
@@ -88,7 +81,7 @@ public class AddItemController {
     // the user clicks the add item button
     // note: this method ensures there's no errors with the input
     @FXML
-    void saveItem(ActionEvent event) {
+    void saveItem() {
         // get text from textPane
         String description = textPane.getText();
 
@@ -109,19 +102,19 @@ public class AddItemController {
         // create a new item
         newItem = new Item(description,dueDate,status);
 
-        // close the window
-        stage.close();
+        // close the stage
+        ((Stage) button.getScene().getWindow()).close();
     }
 
     // the user entered invalid input
-    void promptInvalidInput() {
+    private void promptInvalidInput() {
         try{
             // load new fxml loader, and set a new stage
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("invalidInput.fxml"));
-            Parent root2 = (Parent)fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root2));
-            stage.show();
+            Parent root2 = fxmlLoader.load();
+            Stage stage2 = new Stage();
+            stage2.setScene(new Scene(root2));
+            stage2.show();
         }
         catch(IOException e) {
             System.err.print("Error loading invalidInput GUI.");

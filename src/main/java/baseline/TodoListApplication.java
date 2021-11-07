@@ -24,7 +24,7 @@ public class TodoListApplication extends javafx.application.Application {
 
         // Set the scene and apply style
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
 
         // Initialize the GUI
         stage.setTitle("\"Too-Due\" List");
@@ -36,5 +36,4 @@ public class TodoListApplication extends javafx.application.Application {
     public static void main(String[] args) {
         launch(args);
     }
-
 }

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SceneController {
 
@@ -39,6 +40,12 @@ public class SceneController {
     // Button which signifies an event is incomplete
     @FXML
     private RadioButton incompleteButton;
+
+    // Variable to represent "Complete"
+    private static final String COMPLETE = "Complete";
+
+    // Variable to represent "Incomplete"
+    private static final String INCOMPLETE = "Incomplete";
 
     // Button which deletes all items from the list
     @FXML
@@ -91,7 +98,7 @@ public class SceneController {
 
     // Table for storing items
     @FXML
-    TableView tableView;
+    TableView<Item> tableView;
 
     // View list for description
     @FXML
@@ -106,7 +113,7 @@ public class SceneController {
     private TableColumn<Item, String> viewStatus;
 
     // List of items (to be viewed)
-    private ObservableList<Item> listOfItems = FXCollections.observableArrayList();
+    private final ObservableList<Item> listOfItems = FXCollections.observableArrayList();
 
     // List of all items (database)
     private List<Item> inventory = new ArrayList<>();
@@ -123,7 +130,7 @@ public class SceneController {
     public void initialize() {
 
         // assign title image to png in resources
-        titleImage.setImage(new Image(getClass().getResourceAsStream("title.png")));
+        titleImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("title.png"))));
 
         // clear default message in TableView
         tableView.setPlaceholder(new Label(""));
@@ -186,11 +193,12 @@ public class SceneController {
                 String year = listOfItems.get(selectedID).getDueDate().substring(0,4);
                 String month = listOfItems.get(selectedID).getDueDate().substring(5,7);
                 String day = listOfItems.get(selectedID).getDueDate().substring(8,10);
-                dueDateDatePicker.setValue(LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day)));
+                dueDateDatePicker.setValue(LocalDate.of(
+                        Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day)));
             }
 
             // set status to matching button as selected item
-            if(listOfItems.get(selectedID).getStatus().equals("Complete")) completeButton.setSelected(true);
+            if(listOfItems.get(selectedID).getStatus().equals(COMPLETE)) completeButton.setSelected(true);
             else incompleteButton.setSelected(true);
         });
     }
@@ -214,34 +222,41 @@ public class SceneController {
 
     // set the observable list of items to the inventory
     void setListOfItemsToAll() {
+        // change view status
+        view = 1;
+
         // clear the list
         listOfItems.removeAll();
 
         // add all items in the database to the list
-        for(Item i : inventory) {
-            listOfItems.add(i);
-        }
+        listOfItems.addAll(inventory);
     }
 
     // set the observable list of items to the completed items from the inventory
     void setListOfItemsToComplete() {
+        // change view status
+        view = 2;
+
         // clear the list
         listOfItems.removeAll();
 
         // add complete items in the database to the list
         for(Item i : inventory) {
-            if(i.getStatus().equals("Complete")) listOfItems.add(i);
+            if(i.getStatus().equals(COMPLETE)) listOfItems.add(i);
         }
     }
 
-    // set the observable list of items to the incompleted items in the inventory
+    // set the observable list of items to the incomplete items in the inventory
     void setListOfItemsToIncomplete() {
+        // change view status
+        view = 3;
+
         // clear the list
         listOfItems.removeAll();
 
         // add incomplete items in the database to the list
         for(Item i : inventory) {
-            if(i.getStatus().equals("Incomplete")) listOfItems.add(i);
+            if(i.getStatus().equals(INCOMPLETE)) listOfItems.add(i);
         }
     }
 
@@ -259,11 +274,11 @@ public class SceneController {
     // takes an item and adds it to the listOfItems IF the status matches
     void addItemToListIfStatusMatches(Item item) {
         switch(view) {
-            case 1: listOfItems.add(item);
+            case 2: if(item.getStatus().equals(COMPLETE)) listOfItems.add(item);
                 break;
-            case 2: if(item.getStatus().equals("Complete")) listOfItems.add(item);
+            case 3: if(item.getStatus().equals(INCOMPLETE)) listOfItems.add(item);
                 break;
-            case 3: if(item.getStatus().equals("Incomplete")) listOfItems.add(item);
+            default: listOfItems.add(item);
                 break;
         }
     }
@@ -277,7 +292,7 @@ public class SceneController {
             try{
                 // load error GUI, and set a new stage
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("moreThan100Objects.fxml"));
-                Parent root1 = (Parent)fxmlLoader.load();
+                Parent root1 = fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));
                 stage.show();
@@ -288,7 +303,7 @@ public class SceneController {
         }
         else {
             // create a new item by calling the addItem GUI
-            Item newItem = AddItemController.display();
+            Item newItem = (new AddItemController()).display();
 
             // if the item is null, no changes
             if(newItem != null) {
@@ -389,10 +404,10 @@ public class SceneController {
         }
 
         // modify the item in inventory
-        if(inventoryIndex >= 0) inventory.get(inventoryIndex).setStatus("Complete");
+        if(inventoryIndex >= 0) inventory.get(inventoryIndex).setStatus(COMPLETE);
 
         // modify the item in viewable list
-        listOfItems.get(listOfItemsIndex).setStatus("Complete");
+        listOfItems.get(listOfItemsIndex).setStatus(COMPLETE);
 
         // refresh the table
         refreshTable();
@@ -414,10 +429,10 @@ public class SceneController {
         }
 
         // modify the item in inventory
-        if(inventoryIndex >= 0) inventory.get(inventoryIndex).setStatus("Incomplete");
+        if(inventoryIndex >= 0) inventory.get(inventoryIndex).setStatus(INCOMPLETE);
 
         // modify the item in viewable list
-        listOfItems.get(listOfItemsIndex).setStatus("Incomplete");
+        listOfItems.get(listOfItemsIndex).setStatus(INCOMPLETE);
 
         // refresh the table
         refreshTable();
@@ -472,10 +487,10 @@ public class SceneController {
     // Loads a saved list from a specified directory
     @FXML
     void loadList(ActionEvent event) {
-        List<Item> loadedItems = LoadFileController.loadItems();
+        List<Item> loadedItems = (new LoadFileController()).loadItems();
 
         // verify items were present on file
-        if(loadedItems == null || loadedItems.size() == 0) return;
+        if(loadedItems == null || loadedItems.isEmpty()) return;
 
         // reset list
         clearItems();
@@ -537,7 +552,7 @@ public class SceneController {
         try{
             // load new fxml loader, and set a new stage
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("invalidInput.fxml"));
-            Parent root1 = (Parent)fxmlLoader.load();
+            Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
             stage.show();

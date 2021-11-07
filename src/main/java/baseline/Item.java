@@ -19,7 +19,7 @@ public class Item {
     private String status;
 
     // store item ID
-    private int id;
+    private final int id;
 
     // create counter for item ID
     private static int index = 0;
