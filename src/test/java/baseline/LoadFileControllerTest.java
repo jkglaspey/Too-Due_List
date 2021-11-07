@@ -23,7 +23,7 @@ class LoadFileControllerTest {
     @Test
     void load() {
         // test that we populate the array of values from a txt file (256Items.txt)
-        test.forceLoad("./data/test/256Items.txt");
+        test.forceLoad("./data/test/100Items.txt");
 
         // test that the first value stored correctly
         // note: the file reading is repetitive for each item, so verifying one stored verifies they all stored
@@ -32,6 +32,6 @@ class LoadFileControllerTest {
         assertEquals("Incomplete",test.getLoadedItems().get(0).getStatus());
 
         // test that the list stored the proper number
-        assertEquals(256,test.getLoadedItems().size());
+        assertEquals(100,test.getLoadedItems().size());
     }
 }
