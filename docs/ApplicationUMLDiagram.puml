@@ -17,7 +17,7 @@ class Item {
 -String status
 
 'Data is only added through mutator methods
-+Item()
++Item(String description, String dueDate, String status)
 +String getDescription()
 +void setDescription(String description)
 +String getDueDate()

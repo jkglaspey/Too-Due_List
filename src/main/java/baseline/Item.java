@@ -9,8 +9,6 @@ package baseline;
 
 public class Item {
 
-    // create instance variables to store data
-
     // store description
     private String description;
 
@@ -20,46 +18,64 @@ public class Item {
     // store status of completion
     private String status;
 
-    // initialize values
-    // Precondition: description is at least 3 characters (checked by controller)
-    public Item() {
-        // set complete status to "Incomplete"
-        // rest of the values will be added using set methods by the user through the GUI
+    // store item ID
+    private int id;
+
+    // create counter for item ID
+    private static int index = 0;
+
+    // create new item object
+    // precondition: description is of appropriate length
+    // precondition: due date is of YYYY-MM-DD
+    // precondition: status is either "Complete" or "Incomplete"
+    public Item(String description, String dueDate, String status) {
+        // set the values
+        this.description = description;
+        this.dueDate = dueDate;
+        this.status = status;
+        id = index;
+
+        // increment counter
+        index++;
     }
 
     // create method to get the description
     public String getDescription() {
-        // return the description
-        return null;
+        return description;
     }
 
     // create method to set the description to a new String
-    // precondition: the description is at least 3 characters (checked by controller)
+    // precondition: the description is a valid length
     public void setDescription(String description) {
-        // check if the name is unique through ToDoList method isUnique
-        // set this.description to the new description
+        this.description = description;
     }
 
     // create method to get the due date
     public String getDueDate() {
-        // return the date
-        return null;
+        return dueDate;
     }
 
     // create method to set the due date to a new date
+    // precondition: the date is formatted as YYYY-MM-DD
     public void setDueDate(String dueDate) {
-        // set this.dueDate to the new date
+        this.dueDate = dueDate;
     }
 
     // create method to get the completion status
     public String getStatus() {
-        // return the status
-        return null;
+        return status;
     }
 
     // create method to set the completion status
-    public void setStatus(String s) {
-        // set this.status to either "Complete" or "Incomplete" depending on input
-        // if s is neither, prompt user that it is an invalid input
+    // precondition: string is either "Complete" or "Incomplete"
+    public void setStatus(String s) { status = s; }
+
+    // create method to get the id
+    public int getId() { return id; }
+
+    // create method to reset the index
+    // note: only called if the list is reset
+    public static void resetIndex() {
+        index = 0;
     }
 }

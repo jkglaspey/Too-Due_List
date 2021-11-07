@@ -14,7 +14,7 @@ class ItemTest {
     Item test;
     @BeforeEach
     void init_Item() {
-        test = new Item();
+        test = new Item("description","10-24-2024","Complete");
     }
 
     // test the methods that modify the description

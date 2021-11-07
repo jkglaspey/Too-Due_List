@@ -18,10 +18,7 @@ class ItemCellTest {
     void init_ItemCell() {
         test = new ItemCell();
         // create values for cell
-        Item data = new Item();
-        data.setDescription("description");
-        data.setDueDate("10-24-2021");
-        data.setStatus("Complete");
+        Item data = new Item("description","10-24-2024","Complete");
         test.updateItem(data,false);
     }
 

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="100.0" prefWidth="300.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.ErrorCreatingFileController">
+<AnchorPane prefHeight="100.0" prefWidth="300.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.NoPathController">
    <children>
       <Pane prefHeight="20.0" prefWidth="200.0" style="-fx-background-color: #2196f3;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <Pane prefHeight="150.0" prefWidth="10.0" style="-fx-background-color: #2196f3;" AnchorPane.leftAnchor="0.0" />
@@ -21,7 +21,7 @@
             </Button>
          </children>
       </Pane>
-      <Label alignment="CENTER" layoutX="10.0" layoutY="20.0" prefHeight="80.0" prefWidth="280.0" text="Could not create file." AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
+      <Label alignment="CENTER" layoutX="10.0" layoutY="20.0" prefHeight="80.0" prefWidth="280.0" text="File path must be specified." AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
          <font>
             <Font name="Segoe UI" size="14.0" />
          </font>

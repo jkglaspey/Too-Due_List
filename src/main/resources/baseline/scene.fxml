@@ -37,11 +37,11 @@
           </Menu>
         </menus>
       </MenuBar>
-      <VBox layoutY="30.0" prefHeight="378.0" prefWidth="600.0" AnchorPane.topAnchor="30.0">
+      <VBox layoutY="30.0" prefHeight="378.0" prefWidth="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <VBox>
                <children>
-                  <Pane prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #2196f3; -fx-border-width: 0,0,1,0;">
+                  <Pane prefHeight="100.0" style="-fx-background-color: #2196f3; -fx-border-width: 0,0,1,0;">
                      <children>
                         <ImageView fx:id="titleImage" fitHeight="50.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
                         <Button fx:id="newItemButton" layoutX="407.0" layoutY="8.0" mnemonicParsing="false" onAction="#addItemToList" style="-fx-border-color: black;" text="New Item">
@@ -60,15 +60,15 @@
                         </MenuButton>
                      </children>
                   </Pane>
-                  <ScrollPane fx:id="itemsScrollPane" fitToWidth="true" hbarPolicy="NEVER" prefHeight="327.0" prefWidth="600.0">
+                  <ScrollPane fx:id="itemsScrollPane" fitToWidth="true" hbarPolicy="NEVER" prefHeight="327.0">
                      <content>
-                        <AnchorPane fx:id="itemsPane" prefHeight="327.0" prefWidth="600.0">
+                        <AnchorPane fx:id="itemsPane" prefHeight="275.0">
                            <children>
-                              <TableView fx:id="tableView" layoutX="-28.0" layoutY="-1.0" prefWidth="588.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView fx:id="tableView" layoutX="-28.0" layoutY="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
-                                  <TableColumn fx:id="viewDescription" minWidth="400.0" prefWidth="75.0" text="Description" />
-                                  <TableColumn fx:id="viewDueDate" prefWidth="100.0" text="Due Date" />
-                                    <TableColumn fx:id="viewStatus" prefWidth="100.0" text="Completed?" />
+                                  <TableColumn fx:id="viewDescription" editable="false" minWidth="350.0" prefWidth="75.0" style="-fx-padding: 0 0 0 10;" text="Description" />
+                                  <TableColumn fx:id="viewDueDate" editable="false" prefWidth="125.0" style="-fx-alignment: CENTER;" text="Due Date" />
+                                    <TableColumn fx:id="viewStatus" editable="false" prefWidth="125.0" sortable="false" style="-fx-alignment: CENTER;" text="Completed?" />
                                 </columns>
                               </TableView>
                            </children>
@@ -82,7 +82,7 @@
                               <Font name="Segoe UI" size="12.0" />
                            </font>
                         </TextField>
-                        <DatePicker fx:id="dueDateDatePicker" layoutX="283.0" layoutY="12.0" onAction="#setDate" onKeyTyped="#removeDate" prefHeight="26.0" prefWidth="110.0" promptText="Due Date" style="-fx-border-color: #2196f3;" />
+                        <DatePicker fx:id="dueDateDatePicker" layoutX="283.0" layoutY="12.0" onAction="#setDate" prefHeight="26.0" prefWidth="110.0" promptText="Due Date" style="-fx-border-color: #2196f3;" />
                         <RadioButton fx:id="completeButton" layoutX="421.0" layoutY="18.0" mnemonicParsing="false" onAction="#clickCompleteButton" text="Complete">
                            <toggleGroup>
                               <ToggleGroup fx:id="statusButton" />

@@ -27,7 +27,7 @@
             <Font name="Segoe Script" size="12.0" />
          </font>
       </Button>
-      <Label fx:id="filePathPane" layoutX="126.0" layoutY="50.0" style="-fx-background-color: #e1e1e1; -fx-border-color: #2196f3;" AnchorPane.leftAnchor="126.0">
+      <Label fx:id="filePathPane" layoutX="126.0" layoutY="50.0" style="-fx-background-color: #e1e1e1; -fx-border-color: #2196f3;" AnchorPane.leftAnchor="126.0" AnchorPane.rightAnchor="20.0">
          <font>
             <Font name="Segoe UI" size="14.0" />
          </font>
