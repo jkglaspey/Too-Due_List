@@ -1,31 +1,31 @@
 @startuml
 
 class ErrorCreatingFileController {
-    -Button button;
+    -Button button
 
     ~void closePopup(ActionEvent event)
 }
 
 class FileNotFoundController {
-    -Button button;
+    -Button button
 
     ~void closePopup(ActionEvent event)
 }
 
 class InvalidInputController {
-    -Button button;
+    -Button button
 
     ~void closePopup(ActionEvent event)
 }
 
 class MoreThan100ObjectsController {
-    -Button button;
+    -Button button
 
     ~void closePopup(ActionEvent event)
 }
 
 class NoPathController {
-    -Button button;
+    -Button button
 
     ~void closePopup(ActionEvent event)
 }
@@ -50,11 +50,11 @@ class AddItemController {
 }
 
 class Item {
-    -String description;
-    -String dueDate;
-    -String status;
-    -int id;
-    -{static} int index = 0;
+    -String description
+    -String dueDate
+    -String status
+    -int id
+    -{static} int index
 
     +Item(String description, String dueDate, String status)
     +String getDescription()
@@ -68,13 +68,13 @@ class Item {
 }
 
 class LoadFileController {
-    -Button chooseFileButton;
-    -Label filePathPane;
-    -Button importButton;
-    -Stage stage;
-    -List<Item> loadedItems;
+    -Button chooseFileButton
+    -Label filePathPane
+    -Button importButton
+    -Stage stage
+    -List<Item> loadedItems
 
-    +LoadFileController() {
+    +LoadFileController()
     +LoadFileController(String s)
     ~void chooseFile(ActionEvent event)
     +List<Item> loadItems()
@@ -86,12 +86,12 @@ class LoadFileController {
 }
 
 class SaveFileController {
-    -TextField fileNamePane;
-    -Button findFileButton;
-    -Label pathLabel;
-    -List<Item> savedList;
-    -Stage stage;
-    -Button saveButton;
+    -TextField fileNamePane
+    -Button findFileButton
+    -Label pathLabel
+    -List<Item> savedList
+    -Stage stage
+    -Button saveButton
 
     +SaveFileController()
     +SaveFileController(String s)
@@ -113,31 +113,31 @@ class TodoListApplication extends javafx.application.Application {
 }
 
 class SceneController {
--ImageView titleImage;
--RadioButton completeButton;
--RadioButton incompleteButton;
--{static} String COMPLETE = "Complete";
--{static} String INCOMPLETE = "Incomplete";
--MenuItem deleteAllItems;
--MenuItem deleteItem;
--TextField descriptionTextField;
--DatePicker dueDateDatePicker;
--MenuItem menuFileLoadList;
--MenuItem menuFileSaveList;
--MenuItem menuViewAll;
--MenuItem menuViewComplete;
--MenuItem menuViewIncomplete;
--int view = 1;
--Button newItemButton;
--ScrollPane itemsScrollPane;
-~TableView<Item> tableView;
--TableColumn<Item, String> viewDescription;
--TableColumn<Item, String> viewDueDate;
--TableColumn<Item, String> viewStatus;
--ObservableList<Item> listOfItems = FXCollections.observableArrayList();
--List<Item> inventory = new ArrayList<>();
--AnchorPane itemsPane;
--ToggleGroup statusButton;
+-ImageView titleImage
+-RadioButton completeButton
+-RadioButton incompleteButton
+-{static} String COMPLETE = "Complete"
+-{static} String INCOMPLETE = "Incomplete"
+-MenuItem deleteAllItems
+-MenuItem deleteItem
+-TextField descriptionTextField
+-DatePicker dueDateDatePicker
+-MenuItem menuFileLoadList
+-MenuItem menuFileSaveList
+-MenuItem menuViewAll
+-MenuItem menuViewComplete
+-MenuItem menuViewIncomplete
+-int view
+-Button newItemButton
+-ScrollPane itemsScrollPane
+~TableView<Item> tableView
+-TableColumn<Item, String> viewDescription
+-TableColumn<Item, String> viewDueDate
+-TableColumn<Item, String> viewStatus
+-ObservableList<Item> listOfItems = FXCollections.observableArrayList()
+-List<Item> inventory = new ArrayList<>()
+-AnchorPane itemsPane
+-ToggleGroup statusButton
 
 +void initialize()
 ~void setTableView()
