@@ -11,6 +11,7 @@ package baseline;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -27,7 +28,8 @@ public class TodoListApplication extends javafx.application.Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
 
         // Initialize the GUI
-        stage.setTitle("\"Too-Due\" List");
+        stage.setTitle("\"Too-Due\" List Manager");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
         stage.setScene(scene);
         stage.show();
     }

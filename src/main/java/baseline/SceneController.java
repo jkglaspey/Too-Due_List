@@ -129,7 +129,7 @@ public class SceneController {
     // initialize the controller and values
     public void initialize() {
 
-        // assign title image to png in resources
+        // assign title image to title
         titleImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("title.png"))));
 
         // clear default message in TableView
@@ -306,6 +306,8 @@ public class SceneController {
                 Parent root1 = fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));
+                stage.setTitle("More Than 100 Objects!");
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
                 stage.show();
             }
             catch(IOException e) {
@@ -597,6 +599,8 @@ public class SceneController {
             Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
+            stage.setTitle("Invalid input!");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
             stage.show();
         }
         catch(IOException e) {

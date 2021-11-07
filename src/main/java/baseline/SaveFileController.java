@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -51,6 +52,8 @@ public class SaveFileController {
     // Initialize the stage
     public SaveFileController() {
         stage = new Stage();
+        stage.setTitle("Save File");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
     }
 
     // Call for test methods (no stage initialization)
@@ -174,6 +177,8 @@ public class SaveFileController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("errorCreatingFile.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage2 = new Stage();
+            stage2.setTitle("Error Creating File!");
+            stage2.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
             stage2.setScene(new Scene(root));
             stage2.show();
         }
@@ -189,6 +194,8 @@ public class SaveFileController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("invalidInput.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage2 = new Stage();
+            stage2.setTitle("Invalid Input!");
+            stage2.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
             stage2.setScene(new Scene(root));
             stage2.show();
         }
@@ -204,6 +211,8 @@ public class SaveFileController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("noPath.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage2 = new Stage();
+            stage2.setTitle("Invalid Path!");
+            stage2.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
             stage2.setScene(new Scene(root));
             stage2.show();
         }

@@ -14,16 +14,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class LoadFileController {
 
@@ -45,6 +43,8 @@ public class LoadFileController {
     // initialize the stage
     public LoadFileController() {
         stage = new Stage();
+        stage.setTitle("Load File");
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
     }
 
     // used for testing (no stage declaration)
@@ -137,9 +137,11 @@ public class LoadFileController {
     private void failToLoad() {
         try{
             // load new fxml loader, and set a new stage
-            FXMLLoader fxmlLoader2 = new FXMLLoader(LoadFileController.class.getResource("fileNotFound.fxml"));
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("fileNotFound.fxml"));
             Parent root2 = fxmlLoader2.load();
             Stage stage2 = new Stage();
+            stage2.setTitle("File Not Found!");
+            stage2.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
             stage2.setScene(new Scene(root2));
             stage2.show();
         }
