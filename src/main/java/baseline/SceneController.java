@@ -307,7 +307,7 @@ public class SceneController {
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));
                 stage.setTitle("More Than 100 Objects!");
-                stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+                stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
                 stage.show();
             }
             catch(IOException e) {
@@ -392,7 +392,7 @@ public class SceneController {
 
         // verify the length of the string in the text pane is between 1 and 256 characters
         String newDescription = descriptionTextField.getText();
-        if(isInputInvalid(newDescription)) {
+        if(Boolean.TRUE.equals(isInputInvalid(newDescription))) {
             // display popup that input is invalid and break method
             promptInvalidInput();
             return;
@@ -600,7 +600,7 @@ public class SceneController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
             stage.setTitle("Invalid input!");
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
             stage.show();
         }
         catch(IOException e) {

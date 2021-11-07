@@ -92,6 +92,7 @@ class SaveFileController {
     -List<Item> savedList
     -Stage stage
     -Button saveButton
+    -String LOGO
 
     +SaveFileController()
     +SaveFileController(String s)

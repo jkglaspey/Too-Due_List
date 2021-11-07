@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Formatter;
 import java.util.List;
+import java.util.Objects;
 
 public class SaveFileController {
 
@@ -45,6 +46,9 @@ public class SaveFileController {
     // Stage which can be accessed from anywhere in the method
     private final Stage stage;
 
+    // String to represent the logo png
+    private static final String LOGO = "logo.png";
+
     // Saves the list
     @FXML
     private Button saveButton;
@@ -53,7 +57,7 @@ public class SaveFileController {
     public SaveFileController() {
         stage = new Stage();
         stage.setTitle("Save File");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream(LOGO))));
     }
 
     // Call for test methods (no stage initialization)
@@ -178,7 +182,7 @@ public class SaveFileController {
             Parent root = fxmlLoader.load();
             Stage stage2 = new Stage();
             stage2.setTitle("Error Creating File!");
-            stage2.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+            stage2.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream(LOGO))));
             stage2.setScene(new Scene(root));
             stage2.show();
         }
@@ -195,7 +199,7 @@ public class SaveFileController {
             Parent root = fxmlLoader.load();
             Stage stage2 = new Stage();
             stage2.setTitle("Invalid Input!");
-            stage2.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+            stage2.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream(LOGO))));
             stage2.setScene(new Scene(root));
             stage2.show();
         }
@@ -212,7 +216,7 @@ public class SaveFileController {
             Parent root = fxmlLoader.load();
             Stage stage2 = new Stage();
             stage2.setTitle("Invalid Path!");
-            stage2.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+            stage2.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream(LOGO))));
             stage2.setScene(new Scene(root));
             stage2.show();
         }

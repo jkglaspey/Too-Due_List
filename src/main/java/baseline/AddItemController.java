@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class AddItemController {
 
@@ -47,7 +48,7 @@ public class AddItemController {
     public AddItemController() {
         stage = new Stage();
         stage.setTitle("Add Item");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
     }
 
     // create constructor for testing (no stage initialization)
@@ -139,7 +140,7 @@ public class AddItemController {
             Parent root2 = fxmlLoader.load();
             Stage stage2 = new Stage();
             stage2.setTitle("Invalid Input!");
-            stage2.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+            stage2.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
             stage2.setScene(new Scene(root2));
             stage2.show();
         }

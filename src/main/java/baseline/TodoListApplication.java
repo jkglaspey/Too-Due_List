@@ -29,7 +29,7 @@ public class TodoListApplication extends javafx.application.Application {
 
         // Initialize the GUI
         stage.setTitle("\"Too-Due\" List Manager");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
         stage.setScene(scene);
         stage.show();
     }
