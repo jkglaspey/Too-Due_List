@@ -37,6 +37,23 @@ There might be a time where your description doesn't fit the actual event, or th
  3. To change the *due date*, click the **[Calendar]** and navigate to the new date. It will update the value automatically.
  4. To change the *completion status*, select the opposite **[Completion status]** button.
 
+## Delete a due date
+
+If the due date of an event is unspecified, it is acceptable to use a blank date. 
+To delete a due date:
+1. **[Click]** the desired event on the main table.
+2. **[Click]** the text in the calendar box, and **delete** it.
+3. Press **[Enter]**.
+Now the due date should be set to **"N/A"**.
+
+To create a new item without a due date: 
+1. Follow steps _1._ and _2._ of **Add new event**.
+2. Do **NOT** select a date in the calendar object.
+3. Press the **[Add]** button to add the new event to the list.
+
+Now you should have created a new event without a due date.
+
+
 ## Delete an event
 
 Some events come and go, and it's nice to clear up some space on your list for new entries. To delete an event:

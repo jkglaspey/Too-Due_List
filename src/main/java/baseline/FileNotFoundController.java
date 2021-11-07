@@ -21,7 +21,7 @@ public class FileNotFoundController {
     // method for closing popup
     @FXML
     void closePopup(ActionEvent event) {
-        Stage stage = (Stage) button.getScene().getWindow();
-        stage.close();
+        Stage stage3 = (Stage) button.getScene().getWindow();
+        stage3.close();
     }
 }
